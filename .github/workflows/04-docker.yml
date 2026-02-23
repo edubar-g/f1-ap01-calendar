@@ -6,10 +6,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Login to GHCR
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-      - name: Build and Push
+
+      - name: Extract Maven version
+        id: project_version
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/f1-calendar:latest
-          docker build -t $IMAGE_ID .
-          docker push $IMAGE_ID
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "tag=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/f1-calendar:latest
+            ghcr.io/${{ github.repository_owner }}/f1-calendar:${{ steps.project_version.outputs.tag }}

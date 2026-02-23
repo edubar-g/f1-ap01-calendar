@@ -2,7 +2,7 @@ name: Security Analysis
 on: workflow_call
 
 jobs:
-  build:
+  BuildAndAnalyze:
     name: Build and analyze
     runs-on: ubuntu-latest
     steps:
@@ -30,3 +30,21 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=edubar-g_f1-ap01-calendar
+
+  SnykScan:
+    name: Snyk Security Scan
+    needs: BuildAndAnalyze
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'zulu'
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/maven@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high

@@ -26,8 +26,9 @@ jobs:
     uses: ./.github/workflows/04-docker.yml
     secrets: inherit
 
-  deploy-local-k8s:
-    needs: docker-push
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    uses: ./.github/workflows/05-deploy.yml
-    secrets: inherit
+#TODO:
+#  deploy-local-k8s:
+#    needs: docker-push
+#    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+#    uses: ./.github/workflows/05-deploy.yml
+#    secrets: inherit
