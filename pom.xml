@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>es.ebde</groupId>
 	<artifactId>ap01.calendar</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>F1 calendar</name>
 	<description>F1 calendar Project</description>
 	<url/>
