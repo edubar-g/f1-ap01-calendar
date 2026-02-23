@@ -42,9 +42,12 @@ jobs:
         with:
           java-version: 21
           distribution: 'zulu'
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven@master
+          cache: 'maven'
+
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Run Snyk Test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --severity-threshold=high
+        run: snyk test --severity-threshold=high
