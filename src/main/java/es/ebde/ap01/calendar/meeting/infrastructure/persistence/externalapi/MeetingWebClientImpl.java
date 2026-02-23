@@ -31,7 +31,7 @@ public class MeetingWebClientImpl implements MeetingWebClient {
 					.retrieve()
 					.onStatus(HttpStatusCode::isError,
 							response -> Mono
-								.error(new RuntimeException("Error llamando a la API de F1 : " + response.statusCode())))
+								.error(new RuntimeException("Error llamando a la API de F1  : " + response.statusCode())))
 					.bodyToFlux(MeetingExternalDto.class)
 					.collectList()
 					.blockOptional()
