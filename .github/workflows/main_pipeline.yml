@@ -9,6 +9,9 @@ on:
 jobs:
   check-version:
     uses: ./.github/workflows/01-check-version.yml
+    permissions:
+      contents: read
+      packages: read
 
   build-and-test:
     needs: check-version
