@@ -5,11 +5,6 @@ jobs:
   docker:
     runs-on: ubuntu-latest
 
-    # Permisos necesarios para pushear a GHCR
-    permissions:
-      contents: read
-      packages: write
-
     steps:
       - uses: actions/checkout@v4
 

@@ -24,6 +24,9 @@ jobs:
     needs: security-analysis
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     uses: ./.github/workflows/04-docker.yml
+    permissions:
+      contents: read
+      packages: write
     secrets: inherit
 
 #TODO:
