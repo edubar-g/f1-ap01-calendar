@@ -16,12 +16,13 @@ jobs:
   build-and-test:
     needs: check-version
     uses: ./.github/workflows/02-build-test.yml
-    secrets: inherit
 
   security-analysis:
     needs: build-and-test
     uses: ./.github/workflows/03-security.yml
-    secrets: inherit
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   docker-push:
     needs: security-analysis
@@ -30,7 +31,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-    secrets: inherit
 
 #TODO:
 #  deploy-local-k8s:

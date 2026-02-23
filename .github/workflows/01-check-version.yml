@@ -15,20 +15,16 @@ jobs:
           distribution: 'zulu'
 
       - name: Verify if Docker Image already exists
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          echo "Versión detectada en pom.xml: $VERSION"
-          
           OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           IMAGE="ghcr.io/$OWNER/f1-calendar:$VERSION"
           
-          echo "Buscando si existe la imagen: $IMAGE"
-          
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin > /dev/null 2>&1
+          echo "$GH_TOKEN" | docker login ghcr.io -u ${{ github.actor }} --password-stdin > /dev/null 2>&1
           
           if docker manifest inspect $IMAGE > /dev/null 2>&1; then
-            echo "::error:: La imagen $IMAGE ya existe en el registro (GHCR). ¡Debes subir la versión en tu pom.xml para continuar!"
+            echo "::error::Hay que subir la versión del POM"
             exit 1
-          else
-            echo "La versión $VERSION está libre."
           fi

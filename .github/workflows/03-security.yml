@@ -46,7 +46,7 @@ jobs:
           cache: 'maven'
 
       - name: Setup Snyk CLI
-        uses: snyk/actions/setup@master
+        uses: snyk/actions/setup@806182742461562167f09062f722ac156ff1d02e
 
       - name: Make Maven Wrapper executable
         run: chmod +x mvnw
