@@ -49,6 +49,9 @@ jobs:
       - name: Setup Snyk CLI
         uses: snyk/actions/setup@master
 
+      - name: Make Maven Wrapper executable
+        run: chmod +x mvnw
+
       - name: Run Snyk Vulnerability Test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
