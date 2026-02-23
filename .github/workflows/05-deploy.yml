@@ -1,0 +1,10 @@
+name: Deploy Local
+on: workflow_call
+
+jobs:
+  deploy:
+    runs-on: self-hosted # TODO
+    steps:
+      - name: Update K8s Deployment
+        run: |
+          kubectl rollout restart deployment/f1-calendar-deployment

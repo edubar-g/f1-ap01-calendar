@@ -1,0 +1,15 @@
+name: Check Version
+on: workflow_call
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify version is not duplicated
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          if git rev-parse "v$VERSION" >/dev/null 2>&1; then
+            echo "Error: La versión $VERSION ya existe como tag."
+            exit 1
+          fi

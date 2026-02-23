@@ -1,0 +1,33 @@
+name: Full CI/CD Pipeline
+
+on:
+  pull_request:
+    branches: [ development, main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  check-version:
+    uses: ./.github/workflows/01-check-version.yml
+
+  build-and-test:
+    needs: check-version
+    uses: ./.github/workflows/02-build-test.yml
+    secrets: inherit
+
+  security-analysis:
+    needs: build-and-test
+    uses: ./.github/workflows/03-security.yml
+    secrets: inherit
+
+  docker-push:
+    needs: security-analysis
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/04-docker.yml
+    secrets: inherit
+
+  deploy-local-k8s:
+    needs: docker-push
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/05-deploy.yml
+    secrets: inherit
