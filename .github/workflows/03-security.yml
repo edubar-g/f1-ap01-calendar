@@ -2,7 +2,7 @@ name: Security Analysis
 on: workflow_call
 
 jobs:
-  SonarQubeScan:
+  BuildAndAnalyze:
     name: Build and analyze
     runs-on: ubuntu-latest
     steps:
