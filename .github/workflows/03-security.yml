@@ -32,12 +32,29 @@ jobs:
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=edubar-g_f1-ap01-calendar
 
   SnykScan:
+    name: Snyk Security Scan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven-3-jdk-21@master
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'zulu'
+          cache: 'maven'
+
+      - name: Setup Snyk CLI
+        uses: snyk/actions/setup@master
+
+      - name: Make Maven Wrapper executable
+        run: chmod +x mvnw
+
+      - name: Run Snyk Vulnerability Test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --severity-threshold=high
+        run: |
+          snyk monitor --all-projects
+          
+          snyk test --all-projects --severity-threshold=high
