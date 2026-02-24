@@ -8,4 +8,6 @@ public interface MeetingService {
 
 	List<Meeting> getMeetings();
 
+	Meeting getCurrentMeeting();
+
 }

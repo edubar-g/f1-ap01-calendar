@@ -7,6 +7,8 @@ import es.ebde.ap01.calendar.meeting.domain.entity.Meeting;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -20,6 +22,14 @@ public class MeetingServiceImpl implements MeetingService {
 	@Override
 	public List<Meeting> getMeetings() {
 		return meetingWebClient.getMeetings().stream().map(meetingMapper::mapToDomainFromExternalDto).toList();
+	}
+
+	@Override
+	public Meeting getCurrentMeeting() {
+		return meetingWebClient.getMeetings().stream()
+				.map(meetingMapper::mapToDomainFromExternalDto)
+				.filter(meeting -> OffsetDateTime.now().isBefore(meeting.getDateEnd()))
+				.findFirst().orElseThrow();
 	}
 
 }
