@@ -1,7 +1,6 @@
 package es.ebde.ap01.calendar.meeting.infrastructure.persistence.externalapi;
 
 import es.ebde.ap01.calendar.meeting.application.port.out.MeetingWebClient;
-import es.ebde.ap01.calendar.meeting.infrastructure.config.WebClientConfig;
 import es.ebde.ap01.calendar.meeting.infrastructure.persistence.externalapi.dto.MeetingExternalDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.InternalException;
@@ -27,15 +26,15 @@ public class MeetingWebClientImpl implements MeetingWebClient {
 	public List<MeetingExternalDto> getMeetings() {
 		try {
 			List<MeetingExternalDto> meetings = webClient.get()
-					.uri(uriBuilder -> uriBuilder.path(endpoint).build())
-					.retrieve()
-					.onStatus(HttpStatusCode::isError,
-							response -> Mono
-								.error(new RuntimeException("Error llamando a la API de F1  : " + response.statusCode())))
-					.bodyToFlux(MeetingExternalDto.class)
-					.collectList()
-					.blockOptional()
-					.orElse(Collections.emptyList());
+				.uri(uriBuilder -> uriBuilder.path(endpoint).build())
+				.retrieve()
+				.onStatus(HttpStatusCode::isError,
+						response -> Mono
+							.error(new RuntimeException("Error llamando a la API de F1  : " + response.statusCode())))
+				.bodyToFlux(MeetingExternalDto.class)
+				.collectList()
+				.blockOptional()
+				.orElse(Collections.emptyList());
 
 			return meetings;
 

@@ -12,31 +12,29 @@ import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.databind.ObjectMapper;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
 class MeetingControllerIT {
 
-    @Autowired
-    private MockMvc mockMvc;
+	@Autowired
+	private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+	@Autowired
+	private ObjectMapper objectMapper;
 
-    @Autowired
-    private EntityManager entityManager;
+	@Autowired
+	private EntityManager entityManager;
 
-    @BeforeEach
-    void cleanDb(){}
+	@BeforeEach
+	void cleanDb() {
+	}
 
-    @Test
-    void getMeetings() throws Exception {
-        mockMvc.perform(get("/v1/api")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
+	@Test
+	void getMeetings() throws Exception {
+		mockMvc.perform(get("/v1/api").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+	}
+
 }
