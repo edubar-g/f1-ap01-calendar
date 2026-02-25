@@ -33,8 +33,19 @@ class MeetingControllerIT {
 	}
 
 	@Test
-	void getMeetings() throws Exception {
-		mockMvc.perform(get("/v1/api").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+	void getCurrentMeetings() throws Exception {
+		mockMvc.perform(get("/meetings").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+	}
+
+	/*
+	 * @Test void getHistoricalMeetings() throws Exception {
+	 * mockMvc.perform(get("/meetings/historical?year=2024").contentType(MediaType.
+	 * APPLICATION_JSON)).andExpect(status().isOk()); }
+	 */
+
+	@Test
+	void getCurrentMeeting() throws Exception {
+		mockMvc.perform(get("/meetings/current").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 	}
 
 }

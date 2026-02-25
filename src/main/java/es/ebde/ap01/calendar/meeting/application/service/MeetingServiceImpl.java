@@ -26,10 +26,12 @@ public class MeetingServiceImpl implements MeetingService {
 
 	@Override
 	public Meeting getCurrentMeeting() {
-		return meetingWebClient.getMeetings().stream()
-				.map(meetingMapper::mapToDomainFromExternalDto)
-				.filter(meeting -> OffsetDateTime.now().isBefore(meeting.getDateEnd()))
-				.findFirst().orElseThrow();
+		return meetingWebClient.getMeetings()
+			.stream()
+			.map(meetingMapper::mapToDomainFromExternalDto)
+			.filter(meeting -> OffsetDateTime.now().isBefore(meeting.getDateEnd()))
+			.findFirst()
+			.orElseThrow();
 	}
 
 }

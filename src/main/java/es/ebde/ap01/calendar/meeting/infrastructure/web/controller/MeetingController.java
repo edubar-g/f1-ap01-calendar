@@ -28,7 +28,7 @@ public class MeetingController {
 
 	@GetMapping("/current")
 	public ResponseEntity<MeetingOutput> getCurrentMeeting() {
-		return ResponseEntity
-				.ok(meetingMapper.mapToOutputFromDomain(meetingService.getCurrentMeeting()));
+		return ResponseEntity.ok(meetingMapper.mapToOutputFromDomain(meetingService.getCurrentMeeting()));
 	}
+
 }
