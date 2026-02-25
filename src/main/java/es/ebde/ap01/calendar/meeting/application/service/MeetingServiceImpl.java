@@ -7,29 +7,36 @@ import es.ebde.ap01.calendar.meeting.domain.entity.Meeting;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.time.Year;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class MeetingServiceImpl implements MeetingService {
 
-	private final MeetingMapper meetingMapper;
+    private final MeetingMapper meetingMapper;
 
-	private final MeetingWebClient meetingWebClient;
+    private final MeetingWebClient meetingWebClient;
 
-	@Override
-	public List<Meeting> getMeetings() {
-		return meetingWebClient.getMeetings().stream().map(meetingMapper::mapToDomainFromExternalDto).toList();
-	}
+    @Override
+    public List<Meeting> getCurrentMeetings() {
+        return meetingWebClient.getMeetings(Year.now().getValue()).stream().map(meetingMapper::mapToDomainFromExternalDto).toList();
+    }
 
-	@Override
-	public Meeting getCurrentMeeting() {
-		return meetingWebClient.getMeetings().stream()
-				.map(meetingMapper::mapToDomainFromExternalDto)
-				.filter(meeting -> OffsetDateTime.now().isBefore(meeting.getDateEnd()))
-				.findFirst().orElseThrow();
-	}
+    @Override
+    public List<Meeting> getHistoricalMeetings(Integer year) {
+        return meetingWebClient.getMeetings(year).stream().map(meetingMapper::mapToDomainFromExternalDto).toList();
+    }
+
+    @Override
+    public Meeting getCurrentMeeting() {
+        return meetingWebClient.getMeetings(Year.now().getValue())
+                .stream()
+                .map(meetingMapper::mapToDomainFromExternalDto)
+                .filter(meeting -> OffsetDateTime.now().isBefore(meeting.getDateEnd()))
+                .findFirst()
+                .orElseThrow();
+    }
 
 }

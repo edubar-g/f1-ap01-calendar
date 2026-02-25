@@ -19,22 +19,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 class MeetingControllerIT {
 
-	@Autowired
-	private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-	@Autowired
-	private ObjectMapper objectMapper;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-	@Autowired
-	private EntityManager entityManager;
+    @Autowired
+    private EntityManager entityManager;
 
-	@BeforeEach
-	void cleanDb() {
-	}
+    @BeforeEach
+    void cleanDb() {
+    }
 
-	@Test
-	void getMeetings() throws Exception {
-		mockMvc.perform(get("/v1/api").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-	}
+    @Test
+    void getMeetings() throws Exception {
+        mockMvc.perform(get("/v1/api").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+    }
 
 }

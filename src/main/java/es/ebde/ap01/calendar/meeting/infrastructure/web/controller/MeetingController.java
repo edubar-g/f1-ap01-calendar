@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -16,19 +17,26 @@ import java.util.List;
 @RequestMapping("/meetings")
 public class MeetingController {
 
-	private final MeetingService meetingService;
+    private final MeetingService meetingService;
 
-	private final MeetingMapper meetingMapper;
+    private final MeetingMapper meetingMapper;
 
-	@GetMapping
-	public ResponseEntity<List<MeetingOutput>> getMeetings() {
-		return ResponseEntity
-			.ok(meetingService.getMeetings().stream().map(meetingMapper::mapToOutputFromDomain).toList());
-	}
+    @GetMapping
+    public ResponseEntity<List<MeetingOutput>> getCurrentMeetings() {
+        return ResponseEntity
+                .ok(meetingService.getCurrentMeetings().stream().map(meetingMapper::mapToOutputFromDomain).toList());
+    }
 
-	@GetMapping("/current")
-	public ResponseEntity<MeetingOutput> getCurrentMeeting() {
-		return ResponseEntity
-				.ok(meetingMapper.mapToOutputFromDomain(meetingService.getCurrentMeeting()));
-	}
+    //TODO: SEARCH ANOTHER API TO ACCESS HISTORICAL RACES
+    @GetMapping("/historical")
+    public ResponseEntity<List<MeetingOutput>> getHistoricalMeetings(@RequestParam Integer year) {
+        return ResponseEntity
+                .ok(meetingService.getHistoricalMeetings(year).stream().map(meetingMapper::mapToOutputFromDomain).toList());
+    }
+
+    @GetMapping("/current")
+    public ResponseEntity<MeetingOutput> getCurrentMeeting() {
+        return ResponseEntity.ok(meetingMapper.mapToOutputFromDomain(meetingService.getCurrentMeeting()));
+    }
+
 }

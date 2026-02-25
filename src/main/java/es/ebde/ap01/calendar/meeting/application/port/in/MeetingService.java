@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface MeetingService {
 
-	List<Meeting> getMeetings();
+    List<Meeting> getCurrentMeetings();
 
-	Meeting getCurrentMeeting();
+    List<Meeting> getHistoricalMeetings(Integer year);
+
+    Meeting getCurrentMeeting();
 
 }

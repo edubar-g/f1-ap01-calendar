@@ -4,36 +4,36 @@ import java.time.OffsetDateTime;
 
 public record MeetingOutput(Integer circuitKey,
 
-		String circuitInfoUrl,
+                            String circuitInfoUrl,
 
-		String circuitImage,
+                            String circuitImage,
 
-		String circuitShortName,
+                            String circuitShortName,
 
-		String circuitType,
+                            String circuitType,
 
-		String countryCode,
+                            String countryCode,
 
-		String countryFlag,
+                            String countryFlag,
 
-		Integer countryKey,
+                            Integer countryKey,
 
-		String countryName,
+                            String countryName,
 
-		OffsetDateTime dateEnd,
+                            OffsetDateTime dateEnd,
 
-		OffsetDateTime dateStart,
+                            OffsetDateTime dateStart,
 
-		String gmtOffset,
+                            String gmtOffset,
 
-		String location,
+                            String location,
 
-		Integer meetingKey,
+                            Integer meetingKey,
 
-		String meetingName,
+                            String meetingName,
 
-		String meetingOfficialName,
+                            String meetingOfficialName,
 
-		Integer year) {
+                            Integer year) {
 
 }

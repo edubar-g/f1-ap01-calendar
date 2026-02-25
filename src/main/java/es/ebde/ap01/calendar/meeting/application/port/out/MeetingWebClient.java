@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface MeetingWebClient {
 
-	List<MeetingExternalDto> getMeetings();
+    List<MeetingExternalDto> getMeetings(Integer year);
 
 }

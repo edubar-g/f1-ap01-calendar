@@ -10,15 +10,15 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Getter
 public class WebClientConfig {
 
-	@Value("${app.dependencies.api.openf1.base-url}")
-	private String BASE_URL;
+    @Value("${app.dependencies.api.openf1.base-url}")
+    private String BASE_URL;
 
-	@Bean
-	public WebClient webClient() {
-		return WebClient.builder()
-			.baseUrl(BASE_URL)
-			.codecs(configure -> configure.defaultCodecs().maxInMemorySize(16 * 1024 * 1024))
-			.build();
-	}
+    @Bean
+    public WebClient webClient() {
+        return WebClient.builder()
+                .baseUrl(BASE_URL)
+                .codecs(configure -> configure.defaultCodecs().maxInMemorySize(16 * 1024 * 1024))
+                .build();
+    }
 
 }

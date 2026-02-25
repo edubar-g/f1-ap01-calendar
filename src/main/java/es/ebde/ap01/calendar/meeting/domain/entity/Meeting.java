@@ -11,38 +11,38 @@ import java.time.OffsetDateTime;
 @Setter
 public class Meeting {
 
-	private Integer meetingKey;
+    private Integer meetingKey;
 
-	private String meetingName;
+    private String meetingName;
 
-	private String meetingOfficialName;
+    private String meetingOfficialName;
 
-	private Integer circuitKey;
+    private Integer circuitKey;
 
-	private String circuitInfoUrl;
+    private String circuitInfoUrl;
 
-	private String circuitImage;
+    private String circuitImage;
 
-	private String circuitShortName;
+    private String circuitShortName;
 
-	private String circuitType;
+    private String circuitType;
 
-	private String countryCode;
+    private String countryCode;
 
-	private String countryFlag;
+    private String countryFlag;
 
-	private Integer countryKey;
+    private Integer countryKey;
 
-	private String countryName;
+    private String countryName;
 
-	private OffsetDateTime dateStart;
+    private OffsetDateTime dateStart;
 
-	private OffsetDateTime dateEnd;
+    private OffsetDateTime dateEnd;
 
-	private String gmtOffset;
+    private String gmtOffset;
 
-	private String location;
+    private String location;
 
-	private Integer year;
+    private Integer year;
 
 }

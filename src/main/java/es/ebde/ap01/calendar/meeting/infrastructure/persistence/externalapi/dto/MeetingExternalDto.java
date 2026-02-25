@@ -6,35 +6,35 @@ import java.time.OffsetDateTime;
 
 public record MeetingExternalDto(@JsonProperty("circuit_key") Integer circuitKey,
 
-		@JsonProperty("circuit_info_url") String circuitInfoUrl,
+                                 @JsonProperty("circuit_info_url") String circuitInfoUrl,
 
-		@JsonProperty("circuit_image") String circuitImage,
+                                 @JsonProperty("circuit_image") String circuitImage,
 
-		@JsonProperty("circuit_short_name") String circuitShortName,
+                                 @JsonProperty("circuit_short_name") String circuitShortName,
 
-		@JsonProperty("circuit_type") String circuitType,
+                                 @JsonProperty("circuit_type") String circuitType,
 
-		@JsonProperty("country_code") String countryCode,
+                                 @JsonProperty("country_code") String countryCode,
 
-		@JsonProperty("country_flag") String countryFlag,
+                                 @JsonProperty("country_flag") String countryFlag,
 
-		@JsonProperty("country_key") Integer countryKey,
+                                 @JsonProperty("country_key") Integer countryKey,
 
-		@JsonProperty("country_name") String countryName,
+                                 @JsonProperty("country_name") String countryName,
 
-		@JsonProperty("date_end") OffsetDateTime dateEnd,
+                                 @JsonProperty("date_end") OffsetDateTime dateEnd,
 
-		@JsonProperty("date_start") OffsetDateTime dateStart,
+                                 @JsonProperty("date_start") OffsetDateTime dateStart,
 
-		@JsonProperty("gmt_offset") String gmtOffset,
+                                 @JsonProperty("gmt_offset") String gmtOffset,
 
-		@JsonProperty("location") String location,
+                                 @JsonProperty("location") String location,
 
-		@JsonProperty("meeting_key") Integer meetingKey,
+                                 @JsonProperty("meeting_key") Integer meetingKey,
 
-		@JsonProperty("meeting_name") String meetingName,
+                                 @JsonProperty("meeting_name") String meetingName,
 
-		@JsonProperty("meeting_official_name") String meetingOfficialName,
+                                 @JsonProperty("meeting_official_name") String meetingOfficialName,
 
-		Integer year) {
+                                 Integer year) {
 }

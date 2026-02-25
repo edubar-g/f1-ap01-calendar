@@ -21,68 +21,68 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class MeetingWebClientImplTest {
 
-	@Autowired
-	private MeetingWebClientImpl meetingWebClient;
+    @Autowired
+    private MeetingWebClientImpl meetingWebClient;
 
-	private static MockWebServer mockBackEnd;
+    private static MockWebServer mockBackEnd;
 
-	@BeforeAll
-	static void setUp() throws IOException {
-		mockBackEnd = new MockWebServer();
-		mockBackEnd.start();
-	}
+    @BeforeAll
+    static void setUp() throws IOException {
+        mockBackEnd = new MockWebServer();
+        mockBackEnd.start();
+    }
 
-	@AfterAll
-	static void tearDown() throws IOException {
-		mockBackEnd.close();
-	}
+    @AfterAll
+    static void tearDown() throws IOException {
+        mockBackEnd.close();
+    }
 
-	@DynamicPropertySource
-	static void registerProperties(DynamicPropertyRegistry registry) {
-		registry.add("app.dependencies.api.openf1.base-url", () -> "http://localhost:" + mockBackEnd.getPort());
+    @DynamicPropertySource
+    static void registerProperties(DynamicPropertyRegistry registry) {
+        registry.add("app.dependencies.api.openf1.base-url", () -> "http://localhost:" + mockBackEnd.getPort());
 
-		registry.add("app.dependencies.api.openf1.meeting-endpoint", () -> "/v1/meetings");
-	}
+        registry.add("app.dependencies.api.openf1.meeting-endpoint", () -> "/v1/meetings");
+    }
 
-	@Test
-	void getMeetings_ReturnsListSuccessfully() {
-		mockBackEnd.enqueue(new MockResponse.Builder().code(200)
-			.body("[{\"id\": 1, \"name\": \"GP de España\"}]")
-			.addHeader("Content-Type", "application/json")
-			.build());
+    @Test
+    void getMeetings_ReturnsListSuccessfully() {
+        mockBackEnd.enqueue(new MockResponse.Builder().code(200)
+                .body("[{\"id\": 1, \"name\": \"GP de España\"}]")
+                .addHeader("Content-Type", "application/json")
+                .build());
 
-		List<MeetingExternalDto> result = meetingWebClient.getMeetings();
+        List<MeetingExternalDto> result = meetingWebClient.getMeetings();
 
-		assertFalse(result.isEmpty());
-		assertEquals(1, result.size());
-	}
+        assertFalse(result.isEmpty());
+        assertEquals(1, result.size());
+    }
 
-	@Test
-	void getMeetings_ApiReturnsError_ThrowsRuntimeException() {
-		mockBackEnd.enqueue(new MockResponse.Builder().code(500).body("Internal Server Error").build());
+    @Test
+    void getMeetings_ApiReturnsError_ThrowsRuntimeException() {
+        mockBackEnd.enqueue(new MockResponse.Builder().code(500).body("Internal Server Error").build());
 
-		InternalException exception = assertThrows(InternalException.class, () -> {
-			meetingWebClient.getMeetings();
-		});
+        InternalException exception = assertThrows(InternalException.class, () -> {
+            meetingWebClient.getMeetings();
+        });
 
-		assertEquals("No se pudo conectar con el servicio de calendario", exception.getMessage());
+        assertEquals("No se pudo conectar con el servicio de calendario", exception.getMessage());
 
-		assertNotNull(exception.getCause());
-		assertTrue(exception.getCause().getMessage().contains("Error llamando a la API de F1"));
-	}
+        assertNotNull(exception.getCause());
+        assertTrue(exception.getCause().getMessage().contains("Error llamando a la API de F1"));
+    }
 
-	@Test
-	void getMeetings_ConnectionFails_ThrowsInternalException() throws IOException {
-		mockBackEnd.close();
+    @Test
+    void getMeetings_ConnectionFails_ThrowsInternalException() throws IOException {
+        mockBackEnd.close();
 
-		InternalException exception = assertThrows(InternalException.class, () -> {
-			meetingWebClient.getMeetings();
-		});
+        InternalException exception = assertThrows(InternalException.class, () -> {
+            meetingWebClient.getMeetings();
+        });
 
-		assertEquals("No se pudo conectar con el servicio de calendario", exception.getMessage());
+        assertEquals("No se pudo conectar con el servicio de calendario", exception.getMessage());
 
-		mockBackEnd = new MockWebServer();
-		mockBackEnd.start();
-	}
+        mockBackEnd = new MockWebServer();
+        mockBackEnd.start();
+    }
 
 }

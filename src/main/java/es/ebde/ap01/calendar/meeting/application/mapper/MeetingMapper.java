@@ -8,8 +8,8 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public abstract class MeetingMapper {
 
-	public abstract Meeting mapToDomainFromExternalDto(MeetingExternalDto meetingExternalDto);
+    public abstract Meeting mapToDomainFromExternalDto(MeetingExternalDto meetingExternalDto);
 
-	public abstract MeetingOutput mapToOutputFromDomain(Meeting meeting);
+    public abstract MeetingOutput mapToOutputFromDomain(Meeting meeting);
 
 }
